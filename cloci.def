@@ -1,0 +1,53 @@
+# Apptainer definition, kept in sync with the Dockerfile.
+# Build under SLURM with ./pull_sif.sh (or pull the CI image: see README).
+Bootstrap: docker
+From: ubuntu:22.04
+
+%arguments
+    PIXI_VERSION=0.71.3
+    CLOCI_REPO=https://github.com/hyphaltip/cloci.git
+    MYCOTOOLS_REPO=https://github.com/hyphaltip/mycotools.git
+    CLOCI_REF=99fdd24006896fa10d9473b206734dbe4fe80451
+    MYCOTOOLS_REF=eac7886ef4e628ecc3cd590df5b7a3d5a970b69d
+
+%files
+    pixi.toml /opt/cloci/pixi.toml
+
+%post
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update && apt-get install -y --no-install-recommends \
+        ca-certificates curl git build-essential procps
+    rm -rf /var/lib/apt/lists/*
+
+    export PIXI_HOME=/opt/pixi
+    curl -fsSL https://pixi.sh/install.sh | PIXI_VERSION=v{{ PIXI_VERSION }} PIXI_NO_PATH_UPDATE=1 bash
+    export PATH=/opt/pixi/bin:$PATH
+
+    cd /opt/cloci
+    mkdir src
+    git clone {{ MYCOTOOLS_REPO }} src/mycotools
+    git -C src/mycotools checkout {{ MYCOTOOLS_REF }}
+    git clone {{ CLOCI_REPO }} src/cloci
+    git -C src/cloci checkout {{ CLOCI_REF }}
+    pixi install
+    pixi clean cache -y
+    rm -rf /root/.cache
+
+%environment
+    export PATH=/opt/cloci/.pixi/envs/default/bin:$PATH
+    export CONDA_PREFIX=/opt/cloci/.pixi/envs/default
+    export LC_ALL=C.UTF-8
+    export MPLCONFIGDIR=/tmp/matplotlib
+
+%test
+    cloci --help >/dev/null
+    mtdb --help >/dev/null
+    python -c "import cloci, mycotools, graph_tool, cogent3"
+    which mmseqs diamond hmmsearch mafft clipkit iqtree fasttree mcl
+
+%runscript
+    exec "$@"
+
+%labels
+    Software cloci
+    Source https://github.com/hyphaltip/cloci_container

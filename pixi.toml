@@ -1,0 +1,43 @@
+# Container environment. The Dockerfile / cloci.def clone mycotools and cloci
+# into ./src at pinned refs, then pixi builds them from source (not from the
+# conda-forge/bioconda packages). Keep in sync with ../pixi.toml in the dev tree.
+[workspace]
+name = "cloci-container"
+channels = ["conda-forge", "bioconda"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = ">=3.10,<3.13"
+pip = "*"
+setuptools = "*"
+setuptools-scm = "*"
+biopython = "*"
+pandas = "*"
+numpy = "*"
+scipy = "*"
+requests = "*"
+openpyxl = "*"
+tqdm = "*"
+cryptography = "*"
+ete3 = "*"
+pyqt = "*"
+legacy-cgi = "*"
+matplotlib = "*"
+numba = "*"
+plotly = "*"
+graph-tool = "*"
+mcl = "*"
+mmseqs2 = "*"
+diamond = "*"
+blast = "*"
+hmmer = "*"
+mafft = "*"
+clipkit = "*"
+iqtree = "*"
+fasttree = "*"
+
+[pypi-dependencies]
+cogent3 = "==2025.5.8a10"
+dna_features_viewer = "*"
+mycotools = { path = "./src/mycotools" }
+cloci = { path = "./src/cloci" }
