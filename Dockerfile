@@ -18,8 +18,8 @@ ARG PIXI_VERSION=0.71.3
 ARG CLOCI_REPO=https://github.com/hyphaltip/cloci.git
 ARG MYCOTOOLS_REPO=https://github.com/hyphaltip/mycotools.git
 # Pinned commits of the checkouts. Bump deliberately.
-ARG CLOCI_REF=99fdd24006896fa10d9473b206734dbe4fe80451
-ARG MYCOTOOLS_REF=eac7886ef4e628ecc3cd590df5b7a3d5a970b69d
+ARG CLOCI_REF=2ca41914792abe64e87e38f3cb9dca63763f2f71
+ARG MYCOTOOLS_REF=6ee1e10a6f45064f29b9d0c493b3adec83668544
 
 LABEL org.opencontainers.image.title="cloci_container" \
       org.opencontainers.image.description="CLOCI (Co-occurrence Locus and Orthologous Cluster Identifier) and Mycotools, built from source" \
