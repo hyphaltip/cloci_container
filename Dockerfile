@@ -19,7 +19,7 @@ ARG CLOCI_REPO=https://github.com/hyphaltip/cloci.git
 ARG MYCOTOOLS_REPO=https://github.com/hyphaltip/mycotools.git
 # Pinned commits of the checkouts. Bump deliberately.
 ARG CLOCI_REF=2ca41914792abe64e87e38f3cb9dca63763f2f71
-ARG MYCOTOOLS_REF=6ee1e10a6f45064f29b9d0c493b3adec83668544
+ARG MYCOTOOLS_REF=3b0bac55e2e15b44d3753ed130c4776ef4b463d7
 
 LABEL org.opencontainers.image.title="cloci_container" \
       org.opencontainers.image.description="CLOCI (Co-occurrence Locus and Orthologous Cluster Identifier) and Mycotools, built from source" \
